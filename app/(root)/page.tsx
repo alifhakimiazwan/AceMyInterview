@@ -9,6 +9,7 @@ import { auth } from "@clerk/nextjs/server";
 const HomePage = async () => {
   const { userId } = await auth();
   const isAuth = !!userId;
+
   return (
     <>
       <section className="card-cta">
