@@ -7,8 +7,8 @@ const InterviewSchema: Schema = new Schema(
     type: { type: String },
     techstack: { type: [String], default: [] },
     amount: { type: Number }, // ✅ Corrected to Number
-    questions: { type: [String], default: [] },
-    userId: { type: String },
+    questions: { type: [String], default: [], required: true },
+    userId: { type: String, required: true },
     finalized: { type: Boolean, default: true },
     coverImage: { type: String },
   },

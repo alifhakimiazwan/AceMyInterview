@@ -1,7 +1,7 @@
 "use client";
 import { AgentProps } from "@/types";
 import Image from "next/image";
-import React, { use } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
