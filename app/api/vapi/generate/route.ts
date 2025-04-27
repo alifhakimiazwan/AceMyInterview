@@ -37,12 +37,11 @@ export async function POST(request: Request) {
       userId,
       role,
       type,
-      techstack: techstack.split(",").map((tech: string) => tech.trim()), // clean spaces
+      techstack: techstack.split(","), // clean spaces
       amount,
       questions: JSON.parse(questions), // <- very important! because AI returns as string
       finalized: true,
       coverImage: getRandomInterviewCover(),
-      createdAt: new Date().toISOString(),
     });
     return Response.json({ success: true, interview }, { status: 201 });
   } catch (error) {

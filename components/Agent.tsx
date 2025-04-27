@@ -36,10 +36,16 @@ const Agent = ({ userName, userId, type }: AgentProps) => {
       }
     };
 
-    const onSpeechStart = () => setIsSpeaking(true);
-    const onSpeechEnd = () => setIsSpeaking(false);
+    const onSpeechStart = () => {
+      console.log("speech start");
+      setIsSpeaking(true);
+    };
+    const onSpeechEnd = () => {
+      console.log("speech end");
+      setIsSpeaking(false);
+    };
     const onError = (error: Error) => {
-      console.error("Error in agent component", error);
+      console.log("Error:", error);
     };
     vapi.on("call-start", onCallStart);
     vapi.on("call-end", onCallEnd);
