@@ -15,7 +15,11 @@ const InterviewDetails = async ({ params }: RouteParams) => {
   const { userId } = await auth();
   const client = await clerkClient();
 
-  const user = await client.users.getUser(userId!);
+  let user = null;
+  if (userId) {
+    const client = await clerkClient();
+    user = await client.users.getUser(userId);
+  }
 
   const interview = await getInterviewById(interviewId);
 
@@ -38,7 +42,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
       </div>
 
       <Agent
-        userName={user.fullName || "You"}
+        userName={user?.fullName || "You"}
         userId={user?.id}
         interviewId={interviewId}
         type="interview"

@@ -3,14 +3,17 @@ import Agent from "@/components/Agent";
 import React from "react";
 
 const InterviewPage = async () => {
-  const { userId } = await auth(); // no await here
+  const { userId } = await auth();
+
+  let user = null;
+  if (userId) {
+    const client = await clerkClient();
+    user = await client.users.getUser(userId);
+  }
 
   if (!userId) {
     return <div>Please login to access the interview page.</div>;
   }
-  const client = await clerkClient();
-
-  const user = await client.users.getUser(userId);
 
   return (
     <>

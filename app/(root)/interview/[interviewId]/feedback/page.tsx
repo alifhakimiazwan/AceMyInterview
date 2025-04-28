@@ -15,11 +15,16 @@ const Feedback = async ({ params }: RouteParams) => {
 
   const client = await clerkClient();
 
-  const user = await client.users.getUser(userId!);
+  let user = null;
+  if (userId) {
+    const client = await clerkClient();
+    user = await client.users.getUser(userId);
+  }
+
   const interview = await getInterviewById(interviewId);
   const feedback = await getFeedbackByInterviewId({
     interviewId,
-    userId,
+    userId: user?.id,
   });
   console.log(feedback);
   return (
