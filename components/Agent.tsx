@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
-
+import axios from "axios";
 enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
@@ -71,16 +71,27 @@ const Agent = ({
     };
   }, []);
 
-  const handleGenerateFeedback = async (message: SavedMessage[]) => {
-    console.log("generate feedback here");
-    const { success, id } = {
-      success: true,
-      id: 'feedbackId"',
-    };
-    if (success && id) {
-      router.push(`/interview/${interviewId}/feedback`);
-    } else {
-      console.log("Error generating feedback");
+  const handleGenerateFeedback = async (messages: SavedMessage[]) => {
+    console.log("handleGenerateFeedback");
+
+    try {
+      const res = await axios.post("/api/feedback", {
+        interviewId,
+        userId,
+        transcript: messages,
+        feedbackId,
+      });
+
+      const data = res.data;
+
+      if (data.success) {
+        router.push(`/interview/${interviewId}/feedback`);
+      } else {
+        console.log("Error generating feedback");
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Axios error generating feedback:", error);
       router.push("/");
     }
   };
@@ -108,9 +119,7 @@ const Agent = ({
       let formattedQuestions = "";
       if (questions) {
         formattedQuestions = questions
-          .map((question) => {
-            `-${question}`;
-          })
+          .map((question) => `- ${question}`)
           .join("\n");
       }
       await vapi.start(interviewer, {

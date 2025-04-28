@@ -4,12 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import InterviewCard from "@/components/InterviewCard";
 import { getInterviewsByUserId, getLatestInterviews } from "@/lib/actionDb";
-import { auth, clerkClient } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
 async function Home() {
   const { userId } = await auth();
 
-  let user = null;
+  const client = await clerkClient();
+
+  const user = await client.users.getUser(userId!);
+
   let userInterviews = [];
   let allInterview = [];
 
@@ -21,6 +25,7 @@ async function Home() {
   }
 
   const hasPastInterviews = userInterviews.length! > 0;
+  console.log(userInterviews);
   const hasUpcomingInterviews = allInterview.length! > 0;
 
   return (
@@ -76,7 +81,7 @@ async function Home() {
             allInterview?.map((interview) => (
               <InterviewCard
                 key={interview.id}
-                userId={user?.id}
+                userId={user.id}
                 interviewId={interview.id}
                 role={interview.role}
                 type={interview.type}

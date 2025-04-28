@@ -26,13 +26,6 @@ const InterviewDetails = async ({ params }: RouteParams) => {
       <div className="flex flex-row gap-4 justify-between">
         <div className="flex flex-row gap-4 items-center max-sm:flex-col">
           <div className="flex flex-row gap-4 items-center">
-            <Image
-              src={interview.coverImage || getRandomInterviewCover()}
-              alt="cover-image"
-              width={40}
-              height={40}
-              className="rounded-full object-cover size-[40px]"
-            />
             <h3 className="capitalize">{interview.role} Interview</h3>
           </div>
 
@@ -45,7 +38,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
       </div>
 
       <Agent
-        userName={user.fullName}
+        userName={user.fullName || "You"}
         userId={user?.id}
         interviewId={interviewId}
         type="interview"

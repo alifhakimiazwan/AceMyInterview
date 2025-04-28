@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import localFont from "next/font/local";
 
-const monaSans = Mona_Sans({
-  variable: "--font-mona-sans",
-  subsets: ["latin"],
+const telegraf = localFont({
+  src: "./fonts/TelegrafRegular.otf",
+  variable: "--font-telegraf",
 });
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className="dark">
-        <body className={`${monaSans.className} antialiased pattern`}>
+        <body className={`${telegraf.className} antialiased pattern`}>
           {children}
           <Toaster />
         </body>

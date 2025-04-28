@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const InterviewSchema: Schema = new Schema(
   {
@@ -17,3 +16,17 @@ const InterviewSchema: Schema = new Schema(
 
 export const Interview =
   mongoose.models.Interview || mongoose.model("Interview", InterviewSchema);
+
+const FeedbackSchema = new Schema({
+  interviewId: { type: String, required: true },
+  userId: { type: String, required: true },
+  totalScore: { type: Number, required: true },
+  categoryScores: { type: Object, required: true }, // or Map, depending
+  strengths: { type: [String], required: true }, // array of strings
+  areasForImprovement: { type: [String], required: true },
+  finalAssessment: { type: String, required: true },
+  createdAt: { type: String, required: true },
+});
+
+export const Feedback =
+  mongoose.models.Feedback || mongoose.model("Feedback", FeedbackSchema);
